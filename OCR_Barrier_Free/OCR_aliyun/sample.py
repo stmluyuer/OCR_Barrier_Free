@@ -11,13 +11,15 @@ from alibabacloud_tea_console.client import Client as ConsoleClient
 from alibabacloud_tea_util.client import Client as UtilClient
 import json
 import dotenv
+import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 # 加载 .env 文件
-dotenv.load_dotenv()
-ALIBABA_CLOUD_ACCESS_KEY_ID = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_ID")
-ALIBABA_CLOUD_ACCESS_KEY_SECRET = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_SECRET")
+# dotenv.load_dotenv()
+# ALIBABA_CLOUD_ACCESS_KEY_ID = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_ID")
+# ALIBABA_CLOUD_ACCESS_KEY_SECRET = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_SECRET")
 
-print(ALIBABA_CLOUD_ACCESS_KEY_ID,ALIBABA_CLOUD_ACCESS_KEY_SECRET)
+# print(ALIBABA_CLOUD_ACCESS_KEY_ID,ALIBABA_CLOUD_ACCESS_KEY_SECRET)
 class Sample:
     def __init__(self):
         pass
@@ -73,10 +75,8 @@ class Sample:
         return ocr_api20210707Client(config)
 
     @staticmethod
-    def main(
-        args: List[str],
-    ) -> None:
-        image_path = input("请输入图片路径: ")
+    def main(ALIBABA_CLOUD_ACCESS_KEY_ID,ALIBABA_CLOUD_ACCESS_KEY_SECRET,image_path,args: List[str]) -> None:
+        # image_path = input("请输入图片路径: ")
         image_path = f'img/{image_path}.jpg'  # 替换成你的图片路径
         with open(image_path, 'rb') as image_file:
             image_content = image_file.read()
@@ -121,19 +121,24 @@ class Sample:
                 current_paragraph += word_info["word"] + " "
                 last_y = y_coord
 
+            
+
             # 添加最后一个段落
             if current_paragraph:
                 paragraphs.append(current_paragraph.strip())
 
-            # 打印处理后的段落
-            for paragraph in paragraphs:
-                print(paragraph)
-        process_text_by_height(ocr_data)
-        input("按任意键关闭程序...")
+            separator = ""
+            paragraph_text = separator.join(paragraphs)
+
+            return paragraph_text
+            
+        paragraph_text = process_text_by_height(ocr_data)
+        return paragraph_text
+        # input("按任意键关闭程序...")
 
 
     @staticmethod
-    async def main_async(
+    async def main_async(ALIBABA_CLOUD_ACCESS_KEY_ID,ALIBABA_CLOUD_ACCESS_KEY_SECRET,image_path,
         args: List[str],
     ) -> None:
         client = Sample.create_client(ALIBABA_CLOUD_ACCESS_KEY_ID,ALIBABA_CLOUD_ACCESS_KEY_SECRET)
