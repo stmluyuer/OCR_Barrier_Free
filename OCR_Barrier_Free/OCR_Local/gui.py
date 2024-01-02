@@ -98,7 +98,7 @@ class Ui_MainWindow(object):
     def performOCR(self,screenshot_path):
         paragraph_text = None  # 或者其他适当的初始值
         try:
-            paragraph_text = Sample.main("LTAI5tDX6QNfZPSHRSxVDPsf","sZmzqvVivKmrHTE8o0NIFFCQVSCqn9",screenshot_path,sys.argv[1:])  # 传递除了脚本名之外的所有命令行参数
+            paragraph_text = Sample.main("","",screenshot_path,sys.argv[1:])  # 传递除了脚本名之外的所有命令行参数
             # paragraph_text = Sample.main(self.usernameInput.text(),self.passwordInput.text(),screenshot_path,sys.argv[1:])  # 传递除了脚本名之外的所有命令行参数
         except Exception as e:
             print(e)
